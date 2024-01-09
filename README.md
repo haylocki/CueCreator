@@ -42,9 +42,10 @@ Select the directory containing the audio files you want to create a cue file fo
 The main window will now open listing all the audio files found in the selected directory.
 Missing or incorrect information can be changed by double clicking on the appropriate item.
 
-If the Directory contains multiple audio files then you can save the cue file by clicking on "Save Cue File".
+If the Directory contains multiple audio files then you can save the cue file by clicking on the "Save Cue File" button.
 
-If the Directory only has a single audio file that contains all the tracks you need to provide a timings file by clicking on "Load Timings".
+If the Directory only has a single audio file that contains multiple tracks you need to provide a timings file by clicking on "Load Timings".
+Then you can save the cue file by clicking on the "Save Cue File" button.
 
 You can create a timings file by loading the audio file into audacity and adding a label at the start of each track (don't forget the first track).
 Then export the labels to a text file. You will then have a compatible timings file that can be loaded with the "Load Timings" button. 
