@@ -1,3 +1,9 @@
+# CueCreator
+
+Allows you to create a cue file for a directory of audio files.
+
+![Alt text](/Screenshots/Main_Window.png?raw=true)
+
 ## Linux Install:
 
 **To install on debian based systems:**
