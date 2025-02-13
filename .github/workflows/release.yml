@@ -26,8 +26,8 @@ jobs:
           python -m pip install build
 
       - name: Build Python Package
-        run: |
-          python -m build
+        working-directory: .
+        run: python -m build
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
