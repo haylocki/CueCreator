@@ -23,20 +23,22 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install setuptools wheel  # Remove Poetry, install setuptools instead
+          python -m pip install setuptools wheel
+          python -m pip install pyinstaller  # Install PyInstaller
 
       - name: Build Python Package
         run: |
           python setup.py sdist bdist_wheel  # Build the package using setuptools and wheel
 
-      - name: List files in dist/ directory
+      - name: Build Executable with PyInstaller
         run: |
-          echo "Listing all files in dist/ directory:"
-          ls -la dist/
+          pyinstaller --onefile src/cuecreator/Cue_Creator.py
+        working-directory: .  # Ensure this is the correct working directory where `main.py` is located
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: dist/*  # Upload all files in the dist/ directory (e.g., wheel, tar.gz)
+          files: |
+            dist/*  # Upload all files in dist/ directory (source distribution, wheel, executables)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is needed to create the release on GitHub
