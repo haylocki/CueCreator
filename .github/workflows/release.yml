@@ -10,6 +10,7 @@ jobs:
   build:
     name: Build and Release
     runs-on: ubuntu-latest  # Uses Ubuntu as the runner
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -22,7 +23,7 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install setuptools wheel
+          python -m pip install setuptools wheel  # Remove Poetry, install setuptools instead
 
       - name: Build Python Package
         run: |
