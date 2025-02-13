@@ -1,5 +1,4 @@
 name: Release
-
 on:
   push:
     tags:
@@ -10,16 +9,16 @@ jobs:
   build:
     name: Build and Release
     runs-on: ubuntu-latest  # Uses Ubuntu as the runner
-    
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-      
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.x"
-      
+
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
@@ -27,12 +26,13 @@ jobs:
 
       - name: List files in the root directory
         run: |
+          echo "Listing all files in the root directory:"
           ls -la
-      
+
       - name: Build Python Package
         run: |
           python -m build  # Build the package using pyproject.toml (creates distribution files in dist/)
-          working-directory: ./ 
+        working-directory: ./  # Ensure it's looking in the root directory
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
