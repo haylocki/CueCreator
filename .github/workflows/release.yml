@@ -12,11 +12,6 @@ jobs:
     runs-on: ubuntu-latest  # Uses Ubuntu as the runner
 
     steps:
-      - name: Debug File Locations
-        run: |
-          ls -la ${{ github.workspace }}
-          ls -la ${{ github.workspace }}/CueCreator
-
       - name: Checkout Repository
         uses: actions/checkout@v3
 
