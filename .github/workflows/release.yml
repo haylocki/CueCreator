@@ -29,11 +29,6 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install build
 
-      - name: List files in the root directory
-        run: |
-          echo "Listing all files in the root directory:"
-          ls -la
-
       - name: Build Python Package
         run: |
           python -m build  # Build the package using pyproject.toml (creates distribution files in dist/)
