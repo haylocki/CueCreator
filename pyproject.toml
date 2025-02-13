@@ -12,3 +12,6 @@ authors = ["Ian Haylock <haylocki@yahoo.co.uk>"]
 python = "^3.7"
 pyqt5 = "^5.15"
 mutagen = "^1.45.1" 
+
+[tool.poetry.packages]
+include = [{ include = "cuecreator", from = "src" }]
