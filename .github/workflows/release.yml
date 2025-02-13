@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - "v*.*.*"  # Runs when a new tag like v1.0.0 is pushed
+  workflow_dispatch:  # This allows manual trigger from Actions tab
 
 jobs:
   build:
