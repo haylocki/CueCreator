@@ -37,7 +37,7 @@ jobs:
 
       - name: Create .deb package using fpm
         run: |
-          fpm --source dir --target deb --name cuecreator --version 1.0.0 --prefix /usr/local/bin -C /home/runner/work/CueCreator/CueCreator/dist .
+          fpm -s dir -t deb -p cuecreator-1.0.0 --name cuecreator --version 1.0.0 --prefix /usr/local/bin -C /home/runner/work/CueCreator/CueCreator/dist .
 
       - name: Upload .deb package
         uses: softprops/action-gh-release@v1
