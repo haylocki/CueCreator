@@ -31,8 +31,9 @@ jobs:
           ls -la  # List all files to check for pyproject.toml
 
       - name: Build Python Package
-        working-directory: .  # Ensure working directory is root
-        run: python -m build
+        run: |
+          cd src  # Change into the directory containing the project files
+          python -m build  # Ensure it uses the correct directory context
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
