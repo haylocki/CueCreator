@@ -15,7 +15,7 @@ dependencies = [
 ]
 
 [tool.setuptools]
-packages = ["cuecreator"]
+packages = [""]
 
 [tool.setuptools.package-dir]
 "" = "src"
