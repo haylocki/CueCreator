@@ -8,10 +8,6 @@ on:
 
 jobs:
   build:
-    permissions:
-      contents: write  # Allows GitHub to create and edit releases
-      id-token: write  # Required for generating the necessary token for API calls
-
     name: Build and Release
     runs-on: ubuntu-latest  # Uses Ubuntu as the runner
 
@@ -33,6 +29,11 @@ jobs:
         run: |
           python -m build  # Build the package using pyproject.toml (creates distribution files in dist/)
         working-directory: .
+
+      - name: List files in dist/ directory
+        run: |
+          echo "Listing all files in dist/ directory:"
+          ls -la dist/
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1

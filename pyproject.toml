@@ -2,13 +2,13 @@
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[tool.poetry]
+[tool.setuptools]
 name = "CueCreator"
 version = "1.0.0"
 description = "Create cue file for a directory containing audio files"
 authors = ["Ian Haylock <haylocki@yahoo.co.uk>"]
 
-[tool.poetry.dependencies]
+[tool.setuptools.dependencies]
 python = "^3.7"
 pyqt5 = "^5.15"
 mutagen = "^1.45.1" 
