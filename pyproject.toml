@@ -1,19 +1,21 @@
 [build-system]
-requires = ["poetry"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
 
-[tool.poetry]
+[project]
 name = "CueCreator"
 version = "1.0.0"
 description = "Create cue file for a directory containing audio files"
-authors = ["Ian Haylock <haylocki@yahoo.co.uk>"]
-
-[tool.poetry.dependencies]
-python = "^3.7"
-pyqt5 = "^5.15"
-mutagen = "^1.45.1"
-
-[tool.poetry.packages]
-packages = [
-    { include = "/src" }
+authors = [{ name = "Ian Haylock", email = "haylocki@yahoo.co.uk" }]
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+    "pyqt5>=5.15",
+    "mutagen>=1.45.1"
 ]
+
+[tool.setuptools]
+packages = ["cuecreator"]
+
+[tool.setuptools.package-dir]
+"" = "src"
