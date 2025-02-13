@@ -1,9 +1,10 @@
 name: Release
+
 on:
   push:
     tags:
       - "v*.*.*"  # Runs when a new tag like v1.0.0 is pushed
-  workflow_dispatch:  # This allows manual trigger from Actions tab
+  workflow_dispatch:  # Allows manual trigger from Actions tab
 
 jobs:
   build:
@@ -32,7 +33,7 @@ jobs:
       - name: Build Python Package
         run: |
           python -m build  # Build the package using pyproject.toml (creates distribution files in dist/)
-        working-directory: ./  # Ensure it's looking in the root directory
+        working-directory: .
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
