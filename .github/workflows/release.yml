@@ -3,12 +3,12 @@ name: Release
 on:
   push:
     tags:
-      - "v*.*.*"  # Triggers when pushing a version tag like v1.0.0
+      - "v*.*.*"  # Runs when a new tag like v1.0.0 is pushed
 
 jobs:
   build:
     name: Build and Release
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Uses Ubuntu as the runner
 
     steps:
       - name: Checkout Repository
@@ -20,66 +20,26 @@ jobs:
           python-version: "3.x"
 
       - name: Install Dependencies
-        run: pip install -r requirements.txt
-
-      # Build Python distributions (source and wheel)
-      - name: Build Python package
         run: |
-          pip install build
+          python -m pip install --upgrade pip
+          python -m pip install build
+
+      - name: Build Python Package
+        run: |
           python -m build
 
-      # Package the app as an executable for Windows
-      - name: Build Windows Executable
-        runs-on: windows-latest
-        steps:
-          - uses: actions/checkout@v3
-          - name: Set up Python
-            uses: actions/setup-python@v4
-            with:
-              python-version: "3.x"
-          - name: Install PyInstaller
-            run: pip install pyinstaller
-          - name: Create Executable
-            run: pyinstaller --onefile cuecreator.py
-          - name: Upload Windows Executable
-            uses: actions/upload-artifact@v3
-            with:
-              name: cuecreator-windows
-              path: dist/cuecreator.exe
-
-      # Package the app as an executable for Linux
-      - name: Build Linux Executable
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v3
-          - name: Install PyInstaller
-            run: pip install pyinstaller
-          - name: Create Executable
-            run: pyinstaller --onefile cuecreator.py
-          - name: Upload Linux Executable
-            uses: actions/upload-artifact@v3
-            with:
-              name: cuecreator-linux
-              path: dist/cuecreator
-
-      # Create GitHub Release and upload assets
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            dist/*.tar.gz
-            dist/*.whl
-            dist/cuecreator.exe
-            dist/cuecreator
+          files: dist/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Optional: Upload to PyPI (needs PYPI_API_TOKEN in GitHub Secrets)
-      - name: Publish to PyPI
-        if: startsWith(github.ref, 'refs/tags/v')
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: |
-          pip install twine
-          twine upload dist/*
+ #     - name: Publish to PyPI
+ #       if: startsWith(github.ref, 'refs/tags/v')
+ #       env:
+ #         TWINE_USERNAME: __token__
+ #         TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+ #       run: |
+ #         python -m pip install --upgrade twine
+ #         twine upload dist/*
