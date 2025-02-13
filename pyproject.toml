@@ -14,4 +14,4 @@ pyqt5 = "^5.15"
 mutagen = "^1.45.1" 
 
 [tool.poetry.packages]
-include = [{ include = "src", from = "." }]
+packages = [{ include = "src", from = "." }]
