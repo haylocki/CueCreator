@@ -8,7 +8,7 @@ Allows you to create a cue file for a directory of audio files.
 
 **To install on debian based systems:**
 
-`sudo apt install python3.10-venv pip`
+`sudo apt install python3-venv pip`
 
 **To install on Arch Linux based systems:**
 
