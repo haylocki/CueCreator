@@ -32,7 +32,7 @@ Allows you to create a cue file for a directory of audio files.
 
 **Run the application:**
 
-`ython ./src/cuecreator/Cue_Creator.py`
+`python ./src/cuecreator/Cue_Creator.py`
 
 **To run the application in the future:**
 
