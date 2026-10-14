@@ -28,17 +28,17 @@ Allows you to create a cue file for a directory of audio files.
 
 **Install the requied python modules:**
 
-`pip install pyqt5 mutagen`
+`pip install pyqt6 mutagen`
 
 **Run the application:**
 
-`python ./src/cuecreator/Cue_Creator.py`
+`python ./src/cue_creator.py`
 
 **To run the application in the future:**
 
 `source path/to/CueCreator/cueenv/bin/activate`
 
-`python path/to/CueCreator/src/Cue_Creator.py`
+`python path/to/CueCreator/src/cue_creator.py`
 
 # Usage:
 
@@ -54,6 +54,6 @@ If the Directory only has a single audio file that contains multiple tracks you 
 Then you can save the cue file by clicking on the "Save Cue File" button.
 
 You can create a timings file by loading the audio file into audacity and adding a label at the start of each track (don't forget the first track).
-Then export the labels to a text file. You will then have a compatible timings file that can be loaded with the "Load Timings" button. 
+Then export the labels to a text file. You will then have a compatible timings file that can be loaded with the "Load Timings" button.
 
 To load a new directory click on the "Load Directory" button.

@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 setup(
     name="CueCreator",
@@ -9,7 +9,7 @@ setup(
     packages=find_packages(where='src'),
     package_dir={"": "src"},
     install_requires=[
-        "pyqt5>=5.15",
+        "PyQt6>=6.0",
         "mutagen>=1.45.1",
     ],
 )
