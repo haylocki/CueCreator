@@ -1,4 +1,5 @@
-name: Build Linux Release
+
+name: Build Linux and Windows Releases
 
 on:
   push:
@@ -10,7 +11,7 @@ permissions:
   contents: write
 
 jobs:
-  release:
+  build-linux:
     name: Build Linux Archive
     runs-on: ubuntu-latest
 
@@ -31,9 +32,74 @@ jobs:
 
           echo "ARCHIVE_NAME=$ARCHIVE_NAME" >> "$GITHUB_ENV"
 
-      - name: Create GitHub release and upload archive
-        uses: softprops/action-gh-release@v3
+      - name: Upload Linux archive
+        uses: actions/upload-artifact@v6
         with:
-          tag_name: ${{ github.ref_name }}
-          files: ${{ env.ARCHIVE_NAME }}
-          generate_release_notes: true
+          name: linux-release
+          path: ${{ env.ARCHIVE_NAME }}
+
+  build-windows:
+    name: Build Windows Archive
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Create release archive
+        shell: pwsh
+        run: |
+          $tagName = "${{ github.ref_name }}"
+          $archiveName = "CueCreator-$tagName-Windows.zip"
+          $archiveDirectory = "CueCreator-$tagName"
+
+          New-Item -ItemType Directory -Path $archiveDirectory | Out-Null
+
+          git archive --format=tar HEAD |
+            tar -xf - -C $archiveDirectory
+
+          Compress-Archive `
+            -Path "$archiveDirectory\*" `
+            -DestinationPath $archiveName `
+            -Force
+
+      - name: Upload Windows archive
+        uses: actions/upload-artifact@v6
+        with:
+          name: windows-release
+          path: CueCreator-${{ github.ref_name }}-Windows.zip
+
+  create-release:
+    name: Publish GitHub Release
+    runs-on: ubuntu-latest
+    needs: [build-linux, build-windows]
+
+    steps:
+      - name: Download Linux archive
+        uses: actions/download-artifact@v6
+        with:
+          name: linux-release
+
+      - name: Download Windows archive
+        uses: actions/download-artifact@v6
+        with:
+          name: windows-release
+
+      - name: Create release and upload archives
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG_NAME="${GITHUB_REF_NAME}"
+
+          if ! gh release view "$TAG_NAME" \
+              --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create "$TAG_NAME" \
+              --repo "$GITHUB_REPOSITORY" \
+              --generate-notes
+          fi
+
+          gh release upload "$TAG_NAME" \
+            CueCreator-"$TAG_NAME"-Linux.tar.gz \
+            CueCreator-"$TAG_NAME"-Windows.zip \
+            --repo "$GITHUB_REPOSITORY" \
+            --clobber

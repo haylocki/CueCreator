@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141522"/>
+      <stop offset="100%" stop-color="#08080f"/>
+    </linearGradient>
+
+    <!-- Accent Gradient (Creation) -->
+    <linearGradient id="createGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe"/>
+      <stop offset="100%" stop-color="#4facfe"/>
+    </linearGradient>
+
+    <!-- Glowing Accent Gradient for CUE Badge -->
+    <linearGradient id="cueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#4f46e5"/>
+    </linearGradient>
+
+    <!-- Document Gradient -->
+    <linearGradient id="docGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#212338"/>
+      <stop offset="100%" stop-color="#161726"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Container Box -->
+  <rect x="32" y="32" width="448" height="448" rx="96" fill="url(#bgGrad)" stroke="#272940" stroke-width="4"/>
+
+  <!-- Document Body -->
+  <path d="M 120,90 L 290,90 L 360,160 L 360,420 A 16,16 0 0,1 344,436 L 120,436 A 16,16 0 0,1 104,420 L 104,106 A 16,16 0 0,1 120,90 Z" 
+        fill="url(#docGrad)" stroke="url(#createGrad)" stroke-width="4"/>
+
+  <!-- Folded Corner -->
+  <path d="M 290,90 L 290,150 A 10,10 0 0,0 300,160 L 360,160 Z" 
+        fill="#2e314d" stroke="url(#createGrad)" stroke-width="3"/>
+
+  <!-- Document Text Lines -->
+  <g fill="#43476e" stroke-linecap="round">
+    <rect x="144" y="270" width="170" height="10" rx="5"/>
+    <rect x="144" y="300" width="130" height="10" rx="5"/>
+    <rect x="144" y="330" width="150" height="10" rx="5"/>
+    <rect x="144" y="360" width="100" height="10" rx="5"/>
+  </g>
+
+  <!-- CUE File Badge -->
+  <g>
+    <rect x="140" y="150" width="170" height="80" rx="14" fill="url(#cueGrad)"/>
+    <text x="225" y="208" 
+          font-family="system-ui, -apple-system, sans-serif" 
+          font-weight="900" 
+          font-size="54" 
+          fill="#ffffff" 
+          text-anchor="middle" 
+          letter-spacing="2">CUE</text>
+  </g>
+
+  <!-- Creation Pen / Beam Tool -->
+  <g>
+    <!-- Pen Body -->
+    <path d="M 390,110 L 410,130 L 280,260 L 245,265 L 250,230 Z" fill="url(#createGrad)"/>
+    <!-- Pen Tip -->
+    <path d="M 390,110 L 410,130 L 420,120 L 400,100 Z" fill="#ffffff"/>
+    
+    <!-- Sparks / Stars -->
+    <path d="M 230,220 Q 230,205 215,205 Q 230,205 230,190 Q 230,205 245,205 Q 230,205 230,220 Z" fill="#00f2fe"/>
+    <path d="M 425,180 Q 425,170 415,170 Q 425,170 425,160 Q 425,170 435,170 Q 425,170 425,180 Z" fill="#ffffff"/>
+  </g>
+
+  <!-- "New File / Create" Plus Badge (Bottom Right) -->
+  <g>
+    <!-- Circle Outer Rim for Contrast -->
+    <circle cx="360" cy="360" r="46" fill="#141522"/>
+    <!-- Circle Button -->
+    <circle cx="360" cy="360" r="40" fill="url(#createGrad)"/>
+    <!-- Plus Symbol -->
+    <path d="M 360,338 L 360,382 M 338,360 L 382,360" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+  </g>
+</svg>

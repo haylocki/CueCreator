@@ -91,7 +91,37 @@ echo Creating launcher...
 ) > run-cuecreator.bat
 
 echo.
+echo Creating Start Menu shortcut...
+
+set "CUECREATOR_DIR=%~dp0"
+set "CUECREATOR_LAUNCHER=%~dp0run-cuecreator.bat"
+set "CUECREATOR_ICON=%~dp0cue_creator.ico"
+set "START_MENU=%APPDATA%\Microsoft\Windows\Start Menu\Programs"
+
+if not exist "%CUECREATOR_ICON%" (
+    echo Warning: cue_creator.ico was not found.
+    echo The shortcut will use the default Windows icon.
+)
+
+if not exist "%START_MENU%" mkdir "%START_MENU%"
+
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command ^
+    "$shell = New-Object -ComObject WScript.Shell; " ^
+    "$shortcut = $shell.CreateShortcut([IO.Path]::Combine($env:APPDATA, 'Microsoft\Windows\Start Menu\Programs\CueCreator.lnk')); " ^
+    "$shortcut.TargetPath = $env:CUECREATOR_LAUNCHER; " ^
+    "$shortcut.WorkingDirectory = $env:CUECREATOR_DIR; " ^
+    "if (Test-Path $env:CUECREATOR_ICON) { $shortcut.IconLocation = $env:CUECREATOR_ICON + ',0' }; " ^
+    "$shortcut.Save()"
+
+if errorlevel 1 (
+    echo Warning: Could not create the Start Menu shortcut.
+) else (
+    echo Start Menu shortcut created.
+)
+
+echo.
 echo Installation completed successfully.
-echo Run run-cuecreator.bat to start CueCreator.
+echo You can now launch CueCreator from the Windows Start Menu.
+echo You can also run run-cuecreator.bat from this folder.
 pause
 

@@ -75,7 +75,18 @@ chmod +x "$LAUNCHER"
 # Create an applications-menu entry for the current user.
 APP_DIR="$HOME/.local/share/applications"
 DESKTOP_FILE="$APP_DIR/cuecreator.desktop"
-mkdir -p "$APP_DIR"
+ICON_DIR="$HOME/.local/share/icons"
+ICON_FILE="$ICON_DIR/cue_creator.png"
+
+mkdir -p "$APP_DIR" "$ICON_DIR"
+
+# Install the application icon.
+if [[ -f "$SCRIPT_DIR/cue_creator.png" ]]; then
+    cp "$SCRIPT_DIR/cue_creator.png" "$ICON_FILE"
+else
+    echo "Warning: cue_creator.png not found; using default icon."
+    ICON_FILE="audio-x-generic"
+fi
 
 {
     echo "[Desktop Entry]"
@@ -88,7 +99,7 @@ mkdir -p "$APP_DIR"
     echo "Terminal=false"
     echo "Categories=AudioVideo;Audio;"
     echo "StartupNotify=true"
-    echo "Icon=audio-x-generic"
+    printf 'Icon=%s\n' "$ICON_FILE"
 } > "$DESKTOP_FILE"
 
 # Verify the installed dependencies.
