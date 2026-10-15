@@ -1,59 +1,94 @@
 # CueCreator
 
-Allows you to create a cue file for a directory of audio files.
+CueCreator is a desktop application that creates CUE sheets for directories containing audio files. It can also create a CUE sheet for a single audio file containing multiple tracks, using a timings file exported from Audacity.
 
-![Alt text](/Screenshots/Main_Window.png?raw=true)
+## Download
 
-## Linux Install:
+Download the latest release from the [GitHub Releases page](https://github.com/haylocki/CueCreator/releases).
 
-**To install on debian based systems:**
+- **Linux:** `CueCreator-v1.0.0-Linux.tar.gz`
+- **Windows:** `CueCreator-v1.0.0-Windows.zip`
 
-`sudo apt install python3-venv pip`
+Extract the archive to a suitable folder before installing.
 
-**To install on Arch Linux based systems:**
+## Linux Installation
 
-`sudo pacman -S python-virtualenv`
+### Debian-based distributions
 
-**Change directory to where you downloaded CueCreator**
+Install the required system packages:
 
-`cd path/to/CueCreator`
+```bash
+sudo apt install python3-venv python3-pip
+```
 
-**Create a python virtual environment:**
+### Arch Linux
 
-`python3 -m venv cueenv`
+Install the required system package:
 
-**Activate the virtual environment:**
+```bash
+sudo pacman -S python-virtualenv
+```
 
-`source cueenv/bin/activate`
+### Install CueCreator
 
-**Install the requied python modules:**
+1. Open a terminal and change to the extracted CueCreator directory:
 
-`pip install pyqt6 mutagen`
+   ```bash
+   cd path/to/CueCreator
+   ```
 
-**Run the application:**
+2. Run the installer:
 
-`python ./src/cue_creator.py`
+   ```bash
+   chmod +x install.sh
+   ./install.sh
+   ```
 
-**To run the application in the future:**
+The installer creates a Python virtual environment, installs the required Python modules, and adds CueCreator to your applications menu.
 
-`source path/to/CueCreator/cueenv/bin/activate`
+Launch CueCreator from the applications menu or run it from the terminal using `run-cuecreator.sh`.
 
-`python path/to/CueCreator/src/cue_creator.py`
+## Windows Installation
 
-# Usage:
+1. Extract the downloaded Windows ZIP archive to a suitable folder.
+2. Open the extracted CueCreator folder.
+3. Run `install.bat`.
 
-When run the application will open a Directory Dialog.
-Select the directory containing the audio files you want to create a cue file for.
+The installer checks for Python 3.11, installs it if necessary and available through Windows Package Manager, creates a Python virtual environment, installs the required modules, and creates a Start Menu shortcut.
 
-The main window will now open listing all the audio files found in the selected directory.
-Missing or incorrect information can be changed by double clicking on the appropriate item.
+Once installation is complete, launch CueCreator from the Windows Start Menu. You can also run `run-cuecreator.bat` from the application folder.
 
-If the Directory contains multiple audio files then you can save the cue file by clicking on the "Save Cue File" button.
+## Usage
 
-If the Directory only has a single audio file that contains multiple tracks you need to provide a timings file by clicking on "Load Timings".
-Then you can save the cue file by clicking on the "Save Cue File" button.
+When CueCreator starts, a directory selection dialog opens. Select the directory containing the audio files from which you want to create a CUE file.
 
-You can create a timings file by loading the audio file into audacity and adding a label at the start of each track (don't forget the first track).
-Then export the labels to a text file. You will then have a compatible timings file that can be loaded with the "Load Timings" button.
+### Creating a CUE sheet from separate audio files
 
-To load a new directory click on the "Load Directory" button.
+If the directory contains multiple audio files:
+
+1. Select the directory containing the tracks.
+2. Review the track information and make any necessary corrections.
+3. Click **Save Cue File** to create the CUE sheet.
+
+### Creating a CUE sheet from one file containing multiple tracks
+
+If the directory contains a single audio file containing an entire album, you need to supply a timings file.
+
+1. Open the audio file in Audacity.
+2. Add a label at the beginning of each track (`Ctrl+B`), including the start of the first track.
+3. Export the labels to a text file using Audacity's label export function.
+4. In CueCreator, select the directory containing the audio file.
+5. Click **Load Timings** and select the exported file.
+6. Review the track information and click **Save Cue File**.
+
+### Loading another directory
+
+Click **Load Directory** to select a different directory of audio files.
+
+## Requirements
+
+- Python 3.11
+- PyQt6
+- Mutagen
+
+The supplied installers create a virtual environment and install the required Python dependencies.
