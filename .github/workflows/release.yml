@@ -1,53 +1,39 @@
-name: Release
+name: Build Linux Release
 
 on:
   push:
     tags:
-      - "v*.*.*"  # Runs when a new tag like v1.0.0 is pushed
-  workflow_dispatch:  # Allows manual trigger from Actions tab
+      - "v*.*.*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
-  build:
-    name: Build and Release
-    runs-on: ubuntu-latest  # Uses Ubuntu as the runner
+  release:
+    name: Build Linux Archive
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - name: Check out repository
+        uses: actions/checkout@v5
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: Create release archive
+        run: |
+          TAG_NAME="${GITHUB_REF_NAME}"
+          ARCHIVE_NAME="CueCreator-${TAG_NAME}-Linux.tar.gz"
+
+          git archive \
+            --format=tar.gz \
+            --prefix="CueCreator-${TAG_NAME}/" \
+            "$GITHUB_SHA" \
+            > "$ARCHIVE_NAME"
+
+          echo "ARCHIVE_NAME=$ARCHIVE_NAME" >> "$GITHUB_ENV"
+
+      - name: Create GitHub release and upload archive
+        uses: softprops/action-gh-release@v2
         with:
-          python-version: "3.x"
-
-      - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install setuptools wheel
-          python -m pip install pyinstaller fpm
-
-      - name: Build Python Package
-        run: |
-          python setup.py sdist bdist_wheel
-
-      - name: Build Executable with PyInstaller
-        run: |
-          pyinstaller --onefile src/cuecreator/Cue_Creator.py
-        working-directory: .  # Ensure this is the correct working directory where `main.py` is located
-
-      - name: Create .deb package using fpm
-        run: |
-          fpm --source dir --target deb --name cuecreator --version 1.0.0 --prefix /usr/local/bin --chdir /home/runner/work/CueCreator/CueCreator/dist .
-
-      - name: Upload .deb package
-        uses: softprops/action-gh-release@v1
-        with:
-          files: dist/cuecreator-1.0.0.deb
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            dist/*  # Upload all files in dist/ directory (source distribution, wheel, executables)
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is needed to create the release on GitHub
+          tag_name: ${{ github.ref_name }}
+          files: ${{ env.ARCHIVE_NAME }}
+          generate_release_notes: true
